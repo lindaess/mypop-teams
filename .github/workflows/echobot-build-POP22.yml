@@ -23,8 +23,8 @@ env:
   Component: EchoBot
   BuildName: 0.1.${{ github.run_number }}
   Environment: D1
-  OrgName: { OrgName }
-  Location: { Location }
+  OrgName: POP22
+  Location: uksouth
 
 jobs:
   build:
@@ -106,5 +106,3 @@ jobs:
             }
             & ./ADF/release-az/Update-AzBuildMetaData.ps1 @Params
           azPSVersion: latest
-
-

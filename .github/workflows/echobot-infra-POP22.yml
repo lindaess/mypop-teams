@@ -22,8 +22,8 @@ on:
   workflow_dispatch:
 
 env:
-  OrgName: { OrgName }
-  Location: { Location }
+  OrgName: POP22
+  Location: uksouth
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -60,5 +60,3 @@ jobs:
             if ($e){throw $e}
         env:
           VMSS_CREDENTIALS: ${{ secrets.VMSS_CREDENTIALS_POP22_BOT }}
-
-
