@@ -1,34 +1,29 @@
-> **Note:**  
-> Public Samples are provided by developers from the Microsoft Graph community.  
-> Public Samples are not official Microsoft Communication samples, and not supported by the Microsoft Communication engineering team. It is recommended that you contact the sample owner before using code from Public Samples in production systems.
+# Teams MYPOP Bot
 
----
-# Teams Voice Echo Bot
-
-**Description:** This sample application shows how to work with the stream of data from the audio socket in a Teams meeting. When the Bot is added to a meeting it will echo everything that is said (in the speaker's voice). If you decide to use the Speech Service mode, then the bot will use Azure AI Speech Service to convert the Speech-To-Text and then convert the Text-To-Speech and you will hear the echo in a Bot's voice. This sample comes with automated pipelines that can deploy and configure the bot on the virtual machines with Virtual Machine Scale Sets (VMSS).
-**Authors:** [@bcage29](https://github.com/bcage29) and [@brwilkinson](https://github.com/brwilkinson)
+[![](http://markdown-videos-api.jorgenkh.no/youtube/hVab4Z6OuFyhjhFv)](https://youtu.be/hVab4Z6OuFyhjhFv)
 
 ---
 
 ### Table of Contents
+
 - **[Introduction](#introduction)**<br>
-    - **[Echo Mode](#echo-mode)**<br>
-    - **[Speech Service Mode](#speech-service-mode)**<br>
+  - **[Echo Mode](#echo-mode)**<br>
+  - **[Speech Service Mode](#speech-service-mode)**<br>
 - **[Getting Started](#getting-started)**<br>
-    - **[Create a PFX Certificate](#create-a-pfx-certificate)**<br>
+  - **[Create a PFX Certificate](#create-a-pfx-certificate)**<br>
 - **[Bot Registration](#bot-registration)**<br>
 - **[Prerequisites](#prerequisites)**<br>
-    - **[General](#general)**<br>
-    - **[Setup Script](#setup-script)**<br>
+  - **[General](#general)**<br>
+  - **[Setup Script](#setup-script)**<br>
 - **[Deploy](#deploy)**<br>
-    - **[PowerShell DSC](#powershell-dsc)**<br>
-    - **[Deploy the Prerequistes](#deploy-the-prerequistes)**<br>
-    - **[Deploy the Infrastructure](#deploy-the-infrastructure)**<br>
-        - **[Update DNS](#update-dns)**<br>
-    - **[Deploy the Solution](#deploy-the-solution)**<br>
+  - **[PowerShell DSC](#powershell-dsc)**<br>
+  - **[Deploy the Prerequistes](#deploy-the-prerequistes)**<br>
+  - **[Deploy the Infrastructure](#deploy-the-infrastructure)**<br>
+    - **[Update DNS](#update-dns)**<br>
+  - **[Deploy the Solution](#deploy-the-solution)**<br>
 - **[Running the Sample](#running-the-sample)**<br>
 - **[Video Walkthrough of Deployment Process](https://aka.ms/TeamsVoiceEchoBotDemo)**<br>
-<br/>
+  <br/>
 
 # Introduction
 
@@ -45,6 +40,7 @@ This is the default mode when deployed (UseSpeechService == false). In this mode
 This is the secondary mode to demonstrate how to use the audio stream from a meeting and process the data. This sample takes the audio stream, uses the Azure AI Speech Service to do Speech to Text and then Text to Speech, the response is a stream that is sent back on the audio socket. In this mode, the bot does not constantly echo, but it listens for a simple keyword. Once it hears the keyword, it will start listening to what you want to echo. Depending on the language you set in the settings, it will listen and talk in that language.
 
 To use Speech Service mode, set the following environment variables:
+
 ```json
 "UseSpeechService": true,
 "SpeechConfigKey": "", // key for your speech service
@@ -54,10 +50,10 @@ To use Speech Service mode, set the following environment variables:
 
 ## Getting Started
 
-* Clone the Git repo for the Microsoft Graph Calling API Samples. Please see the instructions [here](https://docs.microsoft.com/en-us/vsts/git/tutorial/clone?view=vsts&tabs=visual-studio) to get started with VSTS Git. 
-* Log in to your Azure subscription to host web sites and bot services. 
-* Launch Visual Studio Code or open a terminal to the root folder of the sample.
-* Fork the repo or clone it and then push it to your own repo in GitHub.
+- Clone the Git repo for the Microsoft Graph Calling API Samples. Please see the instructions [here](https://docs.microsoft.com/en-us/vsts/git/tutorial/clone?view=vsts&tabs=visual-studio) to get started with VSTS Git.
+- Log in to your Azure subscription to host web sites and bot services.
+- Launch Visual Studio Code or open a terminal to the root folder of the sample.
+- Fork the repo or clone it and then push it to your own repo in GitHub.
 
 ### Create a PFX Certificate
 
@@ -65,21 +61,25 @@ The Bot requires an SSL certificate signed by a Certificate Authority. If you do
 
 1. Verify you have access to make DNS changes to your domain or buy a new domain.
 2. Install [certbot](https://certbot.eff.org/instructions?ws=other&os=windows)
-    - a. Follow the installation instructions
-    - b. If 'certbot' command is not recognized in the terminal, add the path to the certbot.exe to the environment variables path ($env:Path)
+   - a. Follow the installation instructions
+   - b. If 'certbot' command is not recognized in the terminal, add the path to the certbot.exe to the environment variables path ($env:Path)
 3. Open a terminal as an Adminstrator where certbot is loaded
 4. Execute
+
 ```
 certbot certonly --manual --preferred-challenges=dns -d '*.example.com' --key-type rsa
 ```
+
 5. This will create a wildcard certificate for example.com.
 6. Follow the instructions and add the TXT record to your domain
 7. This will create PEM certificates and the default location is 'C:\Certbot\live\example.com'
 8. Install [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html) to convert the certifcate from PEM to PFX
 9. Execute
+
 ```
 openssl pkcs12 -export -out C:\Certbot\live\example.com\star_example_com.pfx -inkey C:\Certbot\live\example.com\privkey.pem -in C:\Certbot\live\example.com\cert.pem
 ```
+
 10. Copy the path to the PFX certificate "C:\Certbot\live\example.com\star_example_com.pfx
 
 ## Bot Registration
@@ -88,8 +88,8 @@ openssl pkcs12 -export -out C:\Certbot\live\example.com\star_example_com.pfx -in
 
 1. Add the following Application Permissions to the bot:
 
-    * Calls.AccessMedia.All
-    * Calls.JoinGroupCall.All
+   - Calls.AccessMedia.All
+   - Calls.JoinGroupCall.All
 
 1. The permissions need to be consented by tenant admin. Go to "https://login.microsoftonline.com/common/adminconsent?client_id=<app_id>&state=<any_number>&redirect_uri=<any_callback_url>" using tenant admin to sign-in, then consent for the whole tenant.
 
@@ -97,36 +97,37 @@ openssl pkcs12 -export -out C:\Certbot\live\example.com\star_example_com.pfx -in
 
 ### General
 
-* Visual Studio (only needed if running locally). You can download the community version [here](http://www.visualstudio.com) for free.
-* PowerShell 7.0+
-* Mirosoft Azure Subscription (If you do not already have a subscription, you can register for a <a href="https://azure.microsoft.com/en-us/free/" target="_blank">free account</a>)
-* An Office 365 tenant enabled for Microsoft Teams, with at least two user accounts enabled for the Calls Tab in Microsoft Teams (Check [here](https://docs.microsoft.com/en-us/microsoftteams/configuring-teams-calling-quickstartguide) for details on how to enable users for the Calls Tab)
-* Install .Net Framework 4.7.1.  The solution will not build if you do not install this.
-* You will need Postman, Fiddler, or an equivalent installed to formulate HTTP requests and inspect the responses.  The following tools are widely used in web development, but if you are familiar with another tool, the instructions in this sample should still apply.
-    + [Postman desktop app](https://www.getpostman.com/)
-    + [Telerik Fiddler](http://www.telerik.com/fiddler)
+- Visual Studio (only needed if running locally). You can download the community version [here](http://www.visualstudio.com) for free.
+- PowerShell 7.0+
+- Mirosoft Azure Subscription (If you do not already have a subscription, you can register for a <a href="https://azure.microsoft.com/en-us/free/" target="_blank">free account</a>)
+- An Office 365 tenant enabled for Microsoft Teams, with at least two user accounts enabled for the Calls Tab in Microsoft Teams (Check [here](https://docs.microsoft.com/en-us/microsoftteams/configuring-teams-calling-quickstartguide) for details on how to enable users for the Calls Tab)
+- Install .Net Framework 4.7.1. The solution will not build if you do not install this.
+- You will need Postman, Fiddler, or an equivalent installed to formulate HTTP requests and inspect the responses. The following tools are widely used in web development, but if you are familiar with another tool, the instructions in this sample should still apply.
+  - [Postman desktop app](https://www.getpostman.com/)
+  - [Telerik Fiddler](http://www.telerik.com/fiddler)
 
 ### Setup Script
 
-* [PowerShell 7.0+](https://docs.microsoft.com/en-us/powershell/scripting/whats-new/what-s-new-in-powershell-70)
-* [Azure Az PowerShell Module](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps)
-    * Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
-* [GitHub CLI](https://cli.github.com/)
-    * This is not a hard requirement, but will automate the step to save the secret in your repo.
-* Must be an owner of the Azure subscription where you are deploying the infrastructure.
-* Must have permissions to create an Azure AD Application.
-* Note: The Azure Bot must be created in a tenant where you are an adminstrator because the bot permissions require admin consent. The bot infrastructure does not need to be in the same tenant where the Azure bot was created. This is useful if you are not an administrator in your tenant and you can use a separate tenant for the Azure Bot and Teams calling.
+- [PowerShell 7.0+](https://docs.microsoft.com/en-us/powershell/scripting/whats-new/what-s-new-in-powershell-70)
+- [Azure Az PowerShell Module](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps)
+  - Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+- [GitHub CLI](https://cli.github.com/)
+  - This is not a hard requirement, but will automate the step to save the secret in your repo.
+- Must be an owner of the Azure subscription where you are deploying the infrastructure.
+- Must have permissions to create an Azure AD Application.
+- Note: The Azure Bot must be created in a tenant where you are an adminstrator because the bot permissions require admin consent. The bot infrastructure does not need to be in the same tenant where the Azure bot was created. This is useful if you are not an administrator in your tenant and you can use a separate tenant for the Azure Bot and Teams calling.
 
-| Secret Name          | Message |
-| -------------------- |:-------------|
-| localadmin           | 'localadmin' is the username for the admin on the provisioned VMSS VMs. The password entered is the password to login and will be configured for all VMs. |
-| AadAppId             | This is the Azure AD Application Client Id that was created when creating an Azure Bot. Refer to the [registration instructions](https://microsoftgraph.github.io/microsoft-graph-comms-samples/docs/articles/calls/register-calling-bot.html) |
-| AadAppSecret         | Client Secret created for the Azure AD Application during the Azure Bot registration. |
-| ServiceDNSName       | Your public domain that will be used to join the bot to a call (ie bot.example.com) |
-| UseSpeechService | True or False setting to set the bot in Echo mode or Speech Service mode. If 'true', the following secrets need to be set. |
-| SpeechConfigKey      | The Speech Service Key |
-| SpeechConfigRegion   | The region where the Speech Service is deployed |
-| BotLanguage          | The language that you want your bot to understand (ie, en-US, es-MX, fr-FR) |
+| Secret Name        | Message                                                                                                                                                                                                                                        |
+| ------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| localadmin         | 'localadmin' is the username for the admin on the provisioned VMSS VMs. The password entered is the password to login and will be configured for all VMs.                                                                                      |
+| AadAppId           | This is the Azure AD Application Client Id that was created when creating an Azure Bot. Refer to the [registration instructions](https://microsoftgraph.github.io/microsoft-graph-comms-samples/docs/articles/calls/register-calling-bot.html) |
+| AadAppSecret       | Client Secret created for the Azure AD Application during the Azure Bot registration.                                                                                                                                                          |
+| ServiceDNSName     | Your public domain that will be used to join the bot to a call (ie bot.example.com)                                                                                                                                                            |
+| UseSpeechService   | True or False setting to set the bot in Echo mode or Speech Service mode. If 'true', the following secrets need to be set.                                                                                                                     |
+| SpeechConfigKey    | The Speech Service Key                                                                                                                                                                                                                         |
+| SpeechConfigRegion | The region where the Speech Service is deployed                                                                                                                                                                                                |
+| BotLanguage        | The language that you want your bot to understand (ie, en-US, es-MX, fr-FR)                                                                                                                                                                    |
+
 <br/>
 
 ## Deploy
@@ -134,11 +135,13 @@ openssl pkcs12 -export -out C:\Certbot\live\example.com\star_example_com.pfx -in
 ### PowerShell DSC
 
 PowerShell Desired State Configuration (DSC) enables you to manage your IT development infrastructure with configuration as code. This sample uses DSC to configure the VMs to run the Teams Voice Echo Bot. Here are a few examples of where we are using DSC:
+
 - Set environment variables on the VM
 - Install software
 - Install the windows service
 
 DSC Resources
+
 - https://docs.microsoft.com/en-us/powershell/scripting/dsc/overview?view=powershell-5.1
 - https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/dsc-overview
 - https://github.com/dsccommunity
@@ -146,22 +149,23 @@ DSC Resources
 ### Deploy the Prerequistes
 
 1. Navigate to the root directory of the sample in PowerShell.
-3. Run `Get-AzContext` to ensure you are deploying to the correct subscription.
-    - You need to have the owner role on the subscription
-    - You need permissions to create a Service Principal
-2. Run .\deploy.ps1 -OrgName <Your 2 - 7 Character Length Letter Abbreviation>
-    - ie .\deploy.ps1 -OrgName TEB -Location eastus2
+2. Run `Get-AzContext` to ensure you are deploying to the correct subscription.
+   - You need to have the owner role on the subscription
+   - You need permissions to create a Service Principal
+3. Run .\deploy.ps1 -OrgName <Your 2 - 7 Character Length Letter Abbreviation>
+   - ie .\deploy.ps1 -OrgName TEB -Location eastus2
+
 ```powershell
     # Option 1. Execute all pre-req steps i.e. run setup to deploy
     . .\deploy.ps1 -orgName <yourOrgName> -Location centralus
     # E.g.
     . .\deploy.ps1 -orgName DNA -Location centralus
-    
+
     # Option 2. After you have run setup the first time, re-execute setup
     . .\deploy.ps1 -orgName <yourOrgName> -Location centralus -RunSetup
     # E.g.
     . .\deploy.ps1 -orgName DNA -Location centralus -RunSetup
-    
+
     # Option 3a. After you have run setup you can deploy from the commandline
     . .\deploy.ps1 -orgName <yourOrgName> -Location centralus -RunDeployment
     # E.g.
@@ -174,43 +178,45 @@ DSC Resources
 ```
 
 This script will do the following:
+
 1. Create a resource group with the naming convention ACU1-TEB-BOT-RG-D1 (Region Abbreviation - Your Org Name - BOT - Resource Group - Environment)
 2. Create a storage account
-    - Grant current user the 'Storage Blob Data Contributor' role
-    - Grant the service principal the 'Storage Blob Data Contributor' role
+   - Grant current user the 'Storage Blob Data Contributor' role
+   - Grant the service principal the 'Storage Blob Data Contributor' role
 3. Create a Key Vault
-    - And grant current user the 'Key Vault Administrator' role
+   - And grant current user the 'Key Vault Administrator' role
 4. Create an Azure AD Application
-    - The Application will be granted the 'Owner' role to the subscription.
-5. Crete a GitHub Secret wiht name AZURE_CREDENTIALS_<YOURORGNAME>_BOT
-    ```json
-    {
-        "clientId": "<GitHub Service Principal Client Id>",
-        "clientSecret": "<GitHub Service Principal Secret>",
-        "tenantId": "<Tenant ID>",
-        "subscriptionId": "<Subscription ID>",
-        "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
-        "resourceManagerEndpointUrl": "https://management.azure.com/",
-        "activeDirectoryGraphResourceId": "https://graph.windows.net/",
-        "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
-        "galleryEndpointUrl": "https://gallery.azure.com/",
-        "managementEndpointUrl": "https://management.core.windows.net/"
-    }
-    ```
-5. Generate the deployment parameters file, build workflow and infrastructure workflow
-6. Upload the PFX certificate to Key Vault
-7. Add the secrets and environment variables to Key Vault
+   - The Application will be granted the 'Owner' role to the subscription.
+5. Crete a GitHub Secret wiht name AZURE*CREDENTIALS*<YOURORGNAME>\_BOT
+   ```json
+   {
+     "clientId": "<GitHub Service Principal Client Id>",
+     "clientSecret": "<GitHub Service Principal Secret>",
+     "tenantId": "<Tenant ID>",
+     "subscriptionId": "<Subscription ID>",
+     "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+     "resourceManagerEndpointUrl": "https://management.azure.com/",
+     "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+     "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+     "galleryEndpointUrl": "https://gallery.azure.com/",
+     "managementEndpointUrl": "https://management.core.windows.net/"
+   }
+   ```
+6. Generate the deployment parameters file, build workflow and infrastructure workflow
+7. Upload the PFX certificate to Key Vault
+8. Add the secrets and environment variables to Key Vault
 
 After the script runs successfully, you should see the following:
+
 1. New resource group with the following resources:
-    - Storage Account
-    - Key Vault
+   - Storage Account
+   - Key Vault
 2. Azure AD Application in Azure AD
-3. In your GitHub Repo, Navigate to Settings > Secrets. You should see a new secret named 'AZURE_CREDENTIALS_<YOURORGNAME>_BOT'
+3. In your GitHub Repo, Navigate to Settings > Secrets. You should see a new secret named 'AZURE*CREDENTIALS*<YOURORGNAME>\_BOT'
 4. Three new files have been created. Check these files in and push them to your repo.
-    - app-build-<YourOrgName>.yml
-    - app-infra-release-<YourOrgName>.yml
-    - azuredeploy<YourOrgName>.parameters.json
+   - app-build-<YourOrgName>.yml
+   - app-infra-release-<YourOrgName>.yml
+   - azuredeploy<YourOrgName>.parameters.json
 5. Once these files have been pushed to your repo, they will kick of the infrastructure and code deployment workflows.
 
 ### Deploy the Infrastructure
@@ -218,49 +224,54 @@ After the script runs successfully, you should see the following:
 The GitHub Action app-infra-release-<YourOrgName>.yml deploys the infrastructure.
 
 You can also run the infrastructure deployment locally using the -RunDeployment flag.
+
 ```
 .\deploy.ps1 -OrgName TEB -RunDeployment
 ```
 
 #### Update DNS
+
 Your DNS Name for your bot needs to point to the public load balacer in order to call your bot and have it join a meeting.
 
 1. Find the public IP resource for the load balancer and copy the DNS name.
 2. Navigate to your DNS settings for your domain and create a new CNAME record.
-    ie CNAME bot acu1-teb-bot-d1-lbplb01-1.eastus2.cloudapp.azure.com
+   ie CNAME bot acu1-teb-bot-d1-lbplb01-1.eastus2.cloudapp.azure.com
 
 ### Deploy the Solution
 
 The GitHub Action app-build-<YourOrgName>.yml builds the solution and uploads the output to the storage account. Once the infrastructure is deployed, DSC will pull the code from the storage account.
 
-## Running the Sample 
-Once your Bot is successfully deployed and running, you will need to send a POST request to trigger join the bot to a meeting.  The POST request will contain a few key pieces of data to tell the bot what meeting to join.
+## Running the Sample
 
-* Teams Meeting Information
+Once your Bot is successfully deployed and running, you will need to send a POST request to trigger join the bot to a meeting. The POST request will contain a few key pieces of data to tell the bot what meeting to join.
 
-    * Log into the Microsoft Teams client (this can be the web client https://teams.microsoft.com).
-    * Create a meeting and join the meeting. 
-    * Open this meeting in Teams, and right click the "Join Microsoft Teams Meeting" and copy the meeting hyperlink
-    * Meeting uri should be in format https://teams.microsoft.com/l/meetup-join/{ThreadId}/{ThreadMessageId}?oid:{OrganizerObjectId}&tid:{TenantId}. 
-    * Copy the Meeting URL.
-    * Join the meeting.
+- Teams Meeting Information
 
-* Use Postman or Fiddler to send the following POST request to your DNS name, ie bot.example.com/joinCall", with header "Content-Type:application/json" and the json content in body as below:
+  - Log into the Microsoft Teams client (this can be the web client https://teams.microsoft.com).
+  - Create a meeting and join the meeting.
+  - Open this meeting in Teams, and right click the "Join Microsoft Teams Meeting" and copy the meeting hyperlink
+  - Meeting uri should be in format https://teams.microsoft.com/l/meetup-join/{ThreadId}/{ThreadMessageId}?oid:{OrganizerObjectId}&tid:{TenantId}.
+  - Copy the Meeting URL.
+  - Join the meeting.
+
+- Use Postman or Fiddler to send the following POST request to your DNS name, ie bot.example.com/joinCall", with header "Content-Type:application/json" and the json content in body as below:
 
 ```json
 {
-    "joinURL": "https://teams.microsoft.com/l/meetup-join/...",
+  "joinURL": "https://teams.microsoft.com/l/meetup-join/..."
 }
 ```
 
-* Here is a sample curl request to join the bot to the meeting.
+- Here is a sample curl request to join the bot to the meeting.
+
 ```c
 curl --location --request POST 'https://bot.example.com/joinCall' --header 'Content-Type: application/json' --data-raw '{ "joinURL": "https://teams.microsoft.com/l/meetup-join/..." }'
 ```
 
-Your request should receive a 200 OK response.  
+Your request should receive a 200 OK response.
 
 ## Local Testing
+
 Refer to the Microsft Graph Documentation on (Local Testing)[https://microsoftgraph.github.io/microsoft-graph-comms-samples/docs/articles/Testing.html]
 
 Note: The certificate is used by the MediaPlatformInstanceSettings and needs to match the ServiceFqdn property of that class.
@@ -268,18 +279,20 @@ Note: The certificate is used by the MediaPlatformInstanceSettings and needs to 
 ### Example: Using a custom domain with ngrok
 
 - Domain: example.com
-- Certificate: *.contoso.com
+- Certificate: \*.contoso.com
 - ServiceDnsName: bot.contoso.com
 - MediaDnsName: tcp.contoso.com
 - MediaInstanceExternalPort: 12332
 
 #### DNS Entries
-| Type | Name | Value |
-| -------------------- |:-------------|:-------------|
-| CNAME | bot | ra8sxx2z.cname.us.ngrok.io. |
-| CNAME | tcp | 1.tcp.ngrok.io. |
+
+| Type  | Name | Value                       |
+| ----- | :--- | :-------------------------- |
+| CNAME | bot  | ra8sxx2z.cname.us.ngrok.io. |
+| CNAME | tcp  | 1.tcp.ngrok.io.             |
 
 #### ngrok config
+
 ```yml
 authtoken: <yourAuthToken>
 tunnels:
@@ -294,6 +307,7 @@ tunnels:
 ```
 
 #### curl request
+
 ```c
 curl --location --request POST 'https://bot.contoso.com/joinCall' --header 'Content-Type: application/json' --data-raw '{ "joinURL": "https://teams.microsoft.com/l/meetup-join/..." }'
 ```
@@ -301,17 +315,19 @@ curl --location --request POST 'https://bot.contoso.com/joinCall' --header 'Cont
 ### Example: Using an ngrok subdomain with multi-level subdomain certificate
 
 - Domain: contoso.com
-- Certificate: *.bot.contoso.com
+- Certificate: \*.bot.contoso.com
 - ServiceDnsName: bot.contoso.com
 - MediaDnsName: 5.bot.contoso.com
 - MediaInstanceExternalPort: 12332
 
 #### DNS Entries
-| Type | Name | Value |
-| -------------------- |:-------------|:-------------|
+
+| Type  | Name  | Value           |
+| ----- | :---- | :-------------- |
 | CNAME | 5.bot | 5.tcp.ngrok.io. |
 
 #### ngrok config
+
 ```yml
 authtoken: <yourAuthToken>
 tunnels:
@@ -326,6 +342,7 @@ tunnels:
 ```
 
 #### curl request
+
 ```c
 curl --location --request POST 'https://signal.ngrok.io/joinCall' --header 'Content-Type: application/json' --data-raw '{ "joinURL": "https://teams.microsoft.com/l/meetup-join/..." }'
 ```
