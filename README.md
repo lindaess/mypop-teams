@@ -1,6 +1,7 @@
 # Teams MYPOP Bot
 
-[![](http://markdown-videos-api.jorgenkh.no/youtube/hVab4Z6OuFyhjhFv)](https://youtu.be/hVab4Z6OuFyhjhFv)
+Youtube link to deployment tutorial:
+https://youtu.be/hVab4Z6OuFyhjhFv
 
 ---
 
