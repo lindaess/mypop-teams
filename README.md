@@ -1,7 +1,7 @@
 # Teams MYPOP Bot
 
 Youtube link to deployment tutorial:
-https://youtu.be/hVab4Z6OuFyhjhFv
+https://youtu.be/fptgUVRhMCE?si=Yyu-Fk1LhdnVraen
 
 ---
 
