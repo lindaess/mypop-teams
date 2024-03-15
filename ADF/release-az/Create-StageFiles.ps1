@@ -4,7 +4,7 @@ param (
     [Parameter(Mandatory)]
     [String]$OrgName,
     [String]$Location,
-    [String]$ComponentName = 'EchoBot',
+    [String]$ComponentName = 'MYPOP',
     [String]$MetaDataFileName = 'componentBuild.json'
 )
 
@@ -23,8 +23,8 @@ $filestocopy = @(
     }
 
     @{
-        SourcePath      = "$PSScriptRoot\..\templates\echobot-build-OrgName.yml"
-        DestinationPath = "$PSScriptRoot\..\..\.github\workflows\echobot-build-${OrgName}.yml"
+        SourcePath      = "$PSScriptRoot\..\templates\mypop-build-OrgName.yml"
+        DestinationPath = "$PSScriptRoot\..\..\.github\workflows\mypop-build-${OrgName}.yml"
         TokenstoReplace = @(
             @{ Name = '{OrgName}'; Value = $OrgName },
             @{ Name = '{Location}'; Value = $Location },
@@ -33,8 +33,8 @@ $filestocopy = @(
     }
 
     @{
-        SourcePath      = "$PSScriptRoot\..\templates\echobot-infra-OrgName.yml"
-        DestinationPath = "$PSScriptRoot\..\..\.github\workflows\echobot-infra-${OrgName}.yml"
+        SourcePath      = "$PSScriptRoot\..\templates\mypop-infra-OrgName.yml"
+        DestinationPath = "$PSScriptRoot\..\..\.github\workflows\mypop-infra-${OrgName}.yml"
         TokenstoReplace = @(
             @{ Name = '{OrgName}'; Value = $OrgName },
             @{ Name = '{Location}'; Value = $Location },

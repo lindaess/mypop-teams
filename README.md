@@ -28,7 +28,7 @@ https://youtu.be/fptgUVRhMCE?si=Yyu-Fk1LhdnVraen
 
 # Introduction
 
-The Teams Voice Echo Bot is a sample demonstrating how to use the audio stream from a Teams call or Meeting. The sample also includes scripts and pipelines to deploy the infrastructure and code to run the Bot in Azure on VMSS.
+The Teams Voice MYPOP Bot is a sample demonstrating how to use the audio stream from a Teams call or Meeting. The sample also includes scripts and pipelines to deploy the infrastructure and code to run the Bot in Azure on VMSS.
 
 Once you joined a meeting, you can request that your bot joins the meeting (through a custom Web API call to the bot or some other trigger). Depending on the mode set during deployment, the bot will either echo every sound or it will use the Azure AI Speech Service to convert the speech to text and then convert the text back to speech in the voice of the bot. Refer to the supported languages on the [Speech Service Documentation](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/overview)
 
@@ -135,7 +135,7 @@ openssl pkcs12 -export -out C:\Certbot\live\example.com\star_example_com.pfx -in
 
 ### PowerShell DSC
 
-PowerShell Desired State Configuration (DSC) enables you to manage your IT development infrastructure with configuration as code. This sample uses DSC to configure the VMs to run the Teams Voice Echo Bot. Here are a few examples of where we are using DSC:
+PowerShell Desired State Configuration (DSC) enables you to manage your IT development infrastructure with configuration as code. This sample uses DSC to configure the VMs to run the Teams Voice MYPOP Bot. Here are a few examples of where we are using DSC:
 
 - Set environment variables on the VM
 - Install software

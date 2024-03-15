@@ -1,0 +1,11 @@
+authtoken: 2UyX0MKG3SnZGK5KAqKaaUtCvz7_48YPtdJiinfcrTDUcdBB6
+version: 2
+tunnels:
+  bot-signaling:
+    proto: http
+    addr: 9442
+    hostname: game-explicitly-redfish.ngrok-free.app
+  bot-media:
+    proto: tcp
+    addr: 8445
+    # remote_addr: 0.tcp.ngrok.io:12332

@@ -23,13 +23,13 @@
 
             FWRules                     = @(
                 @{
-                    Name      = 'EchoBot'
+                    Name      = 'MYPOP'
                     LocalPort = ('8445', '9442', '9441')
                 }
             )
             
             DirectoryPresent            = @(
-                'C:\Source\InstallLogs', 'C:\API\EchoBot', 'C:\Build\EchoBot'
+                'C:\Source\InstallLogs', 'C:\API\MYPOP', 'C:\Build\MYPOP'
             )
             
             # Port Mappings from NAT Pools on Azure Load Balancer
@@ -144,22 +144,22 @@
             # Blob copy with Managed Identity - Oauth2
             AppReleaseDSCAppPresent     = @(
                 @{
-                    ComponentName     = 'EchoBot'
+                    ComponentName     = 'MYPOP'
                     SourcePathBlobURI = 'https://{0}.blob.core.windows.net/builds/'
                     DestinationPath   = 'C:\API\'
                     ValidateFileName  = 'CurrentBuild.txt'
-                    BuildFileName     = 'C:\Build\EchoBot\componentBuild.json'
+                    BuildFileName     = 'C:\Build\MYPOP\componentBuild.json'
                     SleepTime         = '10'
                 }
             )
 
             NewServicePresent           = @(
                 @{
-                    Name        = 'Echo Bot Service'
-                    Path        = 'C:\API\EchoBot\EchoBot.exe'
+                    Name        = 'MYPOP Bot Service'
+                    Path        = 'C:\API\MYPOP\MYPOP.exe'
                     State       = 'Running'
                     StartupType = 'Automatic'
-                    Description = 'Echo Bot Service'
+                    Description = 'MYPOP Bot Service'
                 }
             )
 

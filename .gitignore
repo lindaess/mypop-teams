@@ -351,3 +351,6 @@ MigrationBackup/
 .env
 
 .DS_Store
+
+src/transcripts/**.txt
+src/transcripts/**.txt.done
