@@ -7,6 +7,13 @@ namespace MYPOP.Util
         private static string directoryPath = Directory.GetCurrentDirectory() + "/transcripts/";
         public static void CreateFile(string filePath)
         {
+            var directoryExist = Directory.Exists(directoryPath);
+            if (!directoryExist)
+            {
+                // Create the directory
+                Console.WriteLine("Creating directory: " + directoryPath);
+                Directory.CreateDirectory(directoryPath);
+            }
             // Create the file
             Console.WriteLine("Creating file: " + directoryPath + filePath);
             File.Create(directoryPath + filePath);
