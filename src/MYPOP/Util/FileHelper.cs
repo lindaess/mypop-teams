@@ -4,7 +4,7 @@ namespace MYPOP.Util
 {
     public static class FileHelper
     {
-        private static string directoryPath = Directory.GetCurrentDirectory() + "/transcripts/";
+        private static string directoryPath = Directory.GetCurrentDirectory() + "/transcriptss/";
         public static void CreateFile(string filePath)
         {
             var directoryExist = Directory.Exists(directoryPath);
