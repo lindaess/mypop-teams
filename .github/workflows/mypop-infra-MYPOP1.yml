@@ -7,9 +7,9 @@ on:
   push:
     branches:
       - "master"
-    paths:
-      - "./ADF/**"
-      - .github/workflows/mypop-infra-MYPOP1.yml
+    # paths:
+    #   - "./ADF/**"
+    #   - .github/workflows/mypop-infra-MYPOP1.yml
 
   pull_request:
     branches:
