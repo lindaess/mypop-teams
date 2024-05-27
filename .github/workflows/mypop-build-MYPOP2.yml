@@ -1,4 +1,4 @@
-name: .NET BOT D1 BUILD MYPOP1
+name: .NET BOT D1 BUILD MYPOP2
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
       - "master"
     paths:
       - "./src/**"
-      - .github/workflows/mypop-build-MYPOP1.yml
+      - .github/workflows/mypop-build-MYPOP2.yml
 
   workflow_dispatch:
 
@@ -20,7 +20,7 @@ env:
   Component: MYPOP
   BuildName: 0.1.${{ github.run_number }}
   Environment: D1
-  OrgName: MYPOP1
+  OrgName: MYPOP2
   Location: uksouth
 
 jobs:
@@ -65,7 +65,7 @@ jobs:
       - name: Login via Az module
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_MYPOP1_BOT }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_MYPOP2_BOT }}
           enable-AzPSSession: true
 
       - name: G1_RG_UploadArtifacts_to_Blob

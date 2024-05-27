@@ -1,0 +1,71 @@
+Step 1: run ngrok with ngrok start --all --config ngrok.yml
+
+Step 2: add the TCP of ngrok to domain CNAME 
+
+Step 3: Generate the Certificate Thumbprint with Get-PfxCertificate -FilePath Certificate.pfx 
+
+Or 
+
+openssl pkcs12 -info -in Certificate.pfx
+
+Step 4: Add the certificate thumbprint to the config.json
+
+Step 5: Run code
+
+dotnet run --project src\EchoBot\EchoBot.csproj
+
+APPID : 9657b187-2994-4568-90ce-d3cebbf18da8
+DisplayName: POP Bot     
+ObjectId: 69779687-6501-4380-9af0-80b674e3ce9d             
+TenantId: e44afcaf-ee13-4e7b-b0fc-8914d754ecfe 
+UserPrincipalName: bot@mypop.ai
+policyIdentity for recording policy: mypoprecoding
+APP Secret: kJJ8Q~D61HjSsMTo83Pg7pi~yxzR1UEuN26mnc.L
+SpeechConfigKey: 3b5382794f3c4757ae2635f9e1bd92fe
+SpeechConfigRegion: eastus
+BotLanguage: en-Us
+CertThumbprint: 1A334D913167DAA2C2D0F5390E78661E818E3F56
+
+Set-CsTeamsComplianceRecordingPolicy -Identity mypoprecoding -ComplianceRecordingApplications ` @(New-CsTeamsComplianceRecordingApplication -Parent mypoprecoding -Id 69779687-6501-4380-9af0-80b674e3ce9d)
+
+Grant-CsTeamsComplianceRecordingPolicy -Identity bot@mypop.ai -PolicyName mypoprecoding
+
+DNS Name: mypopaibot.cloudapp.net
+
+https://learn.microsoft.com/en-us/azure/cloud-services/cloud-services-certs-create
+
+
+.\configure_cloud.ps1 -p .\V1.0Samples\LocalMediaSamples\PolicyRecordingBot\ -dns mypopaibot.cloudapp.net -cn mypopaibot.cloudapp.net -thumb 25338BC60FC626A7B88B0826E64D8FCBC1EA7B15 -bid "POP Bot" -aid 9657b187-2994-4568-90ce-d3cebbf18da8 -as kJJ8Q~D61HjSsMTo83Pg7pi~yxzR1UEuN26mnc.L
+
+
+$cert = New-SelfSignedCertificate -DnsName mypopaibot.cloudapp.net -CertStoreLocation ".\" -KeyLength 2048 -KeySpec "KeyExchange"
+$password = ConvertTo-SecureString -String "mypopaibot" -Force -AsPlainText
+Export-PfxCertificate -Cert $cert -FilePath ".\certy.pfx" -Password $password
+
+
+https://teams.microsoft.com/l/meetup-join/19%3ayJrRlTiLBE0ByajJVurQd2mDTi7XTTynU53GlUspIw01%40thread.tacv2/1707410051387?context=%7b%22Tid%22%3a%22e44afcaf-ee13-4e7b-b0fc-8914d754ecfe%22%2c%22Oid%22%3a%22b38752e8-ded8-4dee-bb40-a31edea60ef2%22%7d
+
+ .\deploy.ps1 -orgName POP -Location centralus
+
+ .\deploy.ps1 -OrgName POP -RunDeployment
+
+ VMSS Admin Password: MyPOPBot2024@
+
+CNAME for bot.mypop.ai aeu1-pop-bot-d1-kv.eastus.cloudapp.azure.com
+
+
+
+WARNING: Prefix [AEU1] Org [POP] App [BOT] Environment [D1]
+VERBOSE: Deploying to:
+
+Name         : Microsoft Azure Sponsorship (037b1b36-59ef-4e4b-ab64-5cea63450432) - e44afcaf-ee13-4e7b-b0fc-8914d754ecfe - info@mypop.ai
+Account      : info@mypop.ai
+Environment  : AzureCloud
+Subscription : 037b1b36-59ef-4e4b-ab64-5cea63450432
+Tenant       : e44afcaf-ee13-4e7b-b0fc-8914d754ecfe
+
+
+VERBOSE: Storage Account is: [aeu1popbotd1saglobal] and container is: [aeu1-bot-stageartifacts-haryormeedey]
+
+
+az deployment group create --name 'mypopbot' --resource-group 'AEU1-POP-BOT-RG-D1' --template-file 'ADF\main.bicep' --parameters 'ADF\azuredeploy-POP.parameters.json'
