@@ -354,3 +354,4 @@ MigrationBackup/
 
 src/transcripts/**.txt
 src/transcripts/**.txt.done
+test
