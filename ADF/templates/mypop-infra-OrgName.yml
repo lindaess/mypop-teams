@@ -22,8 +22,8 @@ on:
   workflow_dispatch:
 
 env:
-  OrgName: { OrgName }
-  Location: { Location }
+  OrgName: {OrgName}
+  Location: {Location}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

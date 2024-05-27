@@ -23,8 +23,8 @@ env:
   Component: MYPOP
   BuildName: 0.1.${{ github.run_number }}
   Environment: D1
-  OrgName: { OrgName }
-  Location: { Location }
+  OrgName: {OrgName}
+  Location: {Location}
 
 jobs:
   build:
