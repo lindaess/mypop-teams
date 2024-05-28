@@ -1,4 +1,4 @@
-name: .NET BOT D1 INFRA MYPOP
+name: .NET BOT D1 INFRA MYPOP!
 
 # Controls when the action will run.
 on:
@@ -60,6 +60,3 @@ jobs:
             if ($e){throw $e}
         env:
           VMSS_CREDENTIALS: ${{ secrets.VMSS_CREDENTIALS_MYPOP_BOT }}
-
-
-
