@@ -158,7 +158,7 @@ namespace MYPOP
         /// <returns></returns>
         public async Task StopAsync()
         {
-            if (_app != null) 
+            if (_app != null)
             {
                 using (var scope = _app.Services.CreateScope())
                 {

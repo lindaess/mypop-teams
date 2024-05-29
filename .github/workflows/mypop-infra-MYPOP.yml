@@ -7,9 +7,9 @@ on:
   push:
     branches:
       - "master"
-    # paths:
-    #   - "./ADF/**"
-    #   - .github/workflows/mypop-infra-MYPOP.yml
+    paths:
+      - "./ADF/**"
+      - .github/workflows/mypop-infra-MYPOP.yml
 
   pull_request:
     branches:
@@ -60,3 +60,6 @@ jobs:
             if ($e){throw $e}
         env:
           VMSS_CREDENTIALS: ${{ secrets.VMSS_CREDENTIALS_MYPOP_BOT }}
+
+
+

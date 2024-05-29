@@ -104,6 +104,13 @@ namespace MYPOP
         /// </summary>
         [Required]
         public string MediaDnsName { get; set; }
+
+        public AppSettings()
+        {
+            UseSpeechService = false;
+            BotLanguage = "en-US";
+            UseLocalDevSettings = true;
+        }
     }
 }
 
