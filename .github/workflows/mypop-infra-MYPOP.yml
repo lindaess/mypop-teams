@@ -1,4 +1,4 @@
-name: .NET BOT D1 INFRA MYPOP!
+name: .NET BOT D1 INFRA MYPOP
 
 # Controls when the action will run.
 on:
@@ -7,9 +7,9 @@ on:
   push:
     branches:
       - "master"
-    paths:
-      - "./ADF/**"
-      - .github/workflows/mypop-infra-MYPOP.yml
+    # paths:
+    #   - "./ADF/**"
+    #   - .github/workflows/mypop-infra-MYPOP.yml
 
   pull_request:
     branches:
