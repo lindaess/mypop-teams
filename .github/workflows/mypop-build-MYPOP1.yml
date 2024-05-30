@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - "master"
-    paths:
-      - "./src/**"
-      - .github/workflows/mypop-build-MYPOP1.yml
+    # paths:
+    #   - "./src/**"
+    #   - .github/workflows/mypop-build-MYPOP1.yml
 
   pull_request:
     branches:
@@ -106,6 +106,3 @@ jobs:
             }
             & ./ADF/release-az/Update-AzBuildMetaData.ps1 @Params
           azPSVersion: latest
-
-
-
