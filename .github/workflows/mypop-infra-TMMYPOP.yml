@@ -1,4 +1,4 @@
-name: .NET BOT D1 INFRA MYPOP1
+name: .NET BOT D1 INFRA TMMYPOP
 
 # Controls when the action will run.
 on:
@@ -7,22 +7,22 @@ on:
   push:
     branches:
       - "master"
-    # paths:
-    #   - "./ADF/**"
-    #   - .github/workflows/mypop-infra-MYPOP1.yml
+    paths:
+      - "./ADF/**"
+      - .github/workflows/mypop-infra-TMMYPOP.yml
 
   pull_request:
     branches:
       - "master"
     paths:
       - "./ADF/**"
-      - .github/workflows/mypop-infra-MYPOP1.yml
+      - .github/workflows/mypop-infra-TMMYPOP.yml
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
-  OrgName: MYPOP1
+  OrgName: TMMYPOP
   Location: uksouth
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -43,7 +43,7 @@ jobs:
       - name: Login via Az module
         uses: azure/login@v1
         with:
-          creds: ${{secrets.AZURE_CREDENTIALS_MYPOP1_BOT}}
+          creds: ${{secrets.AZURE_CREDENTIALS_TMMYPOP_BOT}}
           enable-AzPSSession: true
 
       - name: Deploy_All_Subscription
@@ -59,4 +59,7 @@ jobs:
             ./ADF/main.ps1 @Params
             if ($e){throw $e}
         env:
-          VMSS_CREDENTIALS: ${{ secrets.VMSS_CREDENTIALS_MYPOP1_BOT }}
+          VMSS_CREDENTIALS: ${{ secrets.VMSS_CREDENTIALS_TMMYPOP_BOT }}
+
+
+

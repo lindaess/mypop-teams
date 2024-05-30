@@ -38,7 +38,7 @@ resource SA 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    allowBlobPublicAccess: true
+    allowBlobPublicAccess: false
     supportsBlobContainerRetention: true
     azureFilesIdentityBasedAuthentication: ((contains(storageInfo, 'ADDS') && bool(storageInfo.ADDS)) ? azureFilesIdentityBasedAuthentication : null)
     largeFileSharesState: (contains(storageInfo, 'largeFileSharesState') ? storageInfo.largeFileSharesState : null)

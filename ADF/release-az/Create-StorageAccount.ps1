@@ -38,7 +38,7 @@ if (! (Get-AzStorageAccount -EA SilentlyContinue | Where-Object StorageAccountNa
     {
         # Create the global storage acounts
         ## Used for File and Blob Storage for assets/artifacts
-        New-AzStorageAccount -ResourceGroupName $RGName -Name ($SAName).tolower() -AllowBlobPublicAccess $true `
+        New-AzStorageAccount -ResourceGroupName $RGName -Name ($SAName).tolower() -AllowBlobPublicAccess $false `
             -SkuName Standard_RAGRS -Location $Location -Kind StorageV2 -EnableHttpsTrafficOnly $true -ErrorAction Stop
     }
     catch
